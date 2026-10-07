@@ -14,22 +14,22 @@ edge-case test is a separate xUnit task.
 **Purpose**: Create a buildable .NET 8 solution with the three projects and
 the dependency direction defined by the plan.
 
-- [ ] T001 Create `CurrencyConverter.sln` and the `src/` project directories from the plan using .NET 8 project templates.
-- [ ] T002 Create `src/CurrencyConverter.Core/CurrencyConverter.Core.csproj` as a .NET 8 class library with no WPF dependency.
-- [ ] T003 Create `src/CurrencyConverter.App/CurrencyConverter.App.csproj` as a .NET 8 WPF executable targeting Windows and reference `CurrencyConverter.Core`.
-- [ ] T004 Create `src/CurrencyConverter.Tests/CurrencyConverter.Tests.csproj` as a .NET 8 xUnit test project and reference `CurrencyConverter.Core`.
-- [ ] T005 Add all three projects to `CurrencyConverter.sln`, remove template placeholder files, and verify `dotnet build` succeeds from the repository root.
+- [x] T001 Create `CurrencyConverter.sln` and the `src/` project directories from the plan using .NET 8 project templates.
+- [x] T002 Create `src/CurrencyConverter.Core/CurrencyConverter.Core.csproj` as a .NET 8 class library with no WPF dependency.
+- [x] T003 Create `src/CurrencyConverter.App/CurrencyConverter.App.csproj` as a .NET 8 WPF executable targeting Windows and reference `CurrencyConverter.Core`.
+- [x] T004 Create `src/CurrencyConverter.Tests/CurrencyConverter.Tests.csproj` as a .NET 8 xUnit test project and reference `CurrencyConverter.Core`.
+- [x] T005 Add all three projects to `CurrencyConverter.sln`, remove template placeholder files, and verify `dotnet build` succeeds from the repository root.
 
 ## Phase 2: Foundational Core Contracts
 
 **Purpose**: Establish shared result types, abstractions, and deterministic
 failure semantics before feature-specific implementation.
 
-- [ ] T006 [P] Create the domain models `Currency`, `ExchangeRate`, `RateSnapshot`, `ConversionRequest`, `ConversionResult`, and `RateAcquisitionOutcome` in `src/CurrencyConverter.Core/Models/`, preserving the constraints that currency codes are non-empty and unique, numeric rates and nominal values are positive `decimal`s, and every snapshot includes MDL at rate 1.
-- [ ] T007 [P] Define `IRatesProvider`, `IBnmXmlParser`, `IRateCache`, `IInputValidator`, and `ICurrencyConverter` in `src/CurrencyConverter.Core/Services/` and `src/CurrencyConverter.Core/Parsing/` according to `contracts/core-services.md`.
-- [ ] T008 [P] Add explicit Core result/error types in `src/CurrencyConverter.Core/Models/` so transport failures, unavailable rates, parse failures, cache misses, and validation failures cannot become empty success-shaped values.
-- [ ] T009 Create shared date, decimal, and source constants in `src/CurrencyConverter.Core/Services/` for `dd.MM.yyyy`, invariant BNM decimal parsing, the BNM URL template, and `National Bank of Moldova (BNM)`.
-- [ ] T010 Add a Core test fixture builder with valid MDL, unit-nominal, and non-unit-nominal snapshots in `src/CurrencyConverter.Tests/Fixtures/` for reuse by all unit tests.
+- [x] T006 [P] Create the domain models `Currency`, `ExchangeRate`, `RateSnapshot`, `ConversionRequest`, `ConversionResult`, and `RateAcquisitionOutcome` in `src/CurrencyConverter.Core/Models/`, preserving the constraints that currency codes are non-empty and unique, numeric rates and nominal values are positive `decimal`s, and every snapshot includes MDL at rate 1.
+- [x] T007 [P] Define `IRatesProvider`, `IBnmXmlParser`, `IRateCache`, `IInputValidator`, and `ICurrencyConverter` in `src/CurrencyConverter.Core/Services/` and `src/CurrencyConverter.Core/Parsing/` according to `contracts/core-services.md`.
+- [x] T008 [P] Add explicit Core result/error types in `src/CurrencyConverter.Core/Models/` so transport failures, unavailable rates, parse failures, cache misses, and validation failures cannot become empty success-shaped values.
+- [x] T009 Create shared date, decimal, and source constants in `src/CurrencyConverter.Core/Services/` for `dd.MM.yyyy`, invariant BNM decimal parsing, the BNM URL template, and `National Bank of Moldova (BNM)`.
+- [x] T010 Add a Core test fixture builder with valid MDL, unit-nominal, and non-unit-nominal snapshots in `src/CurrencyConverter.Tests/Fixtures/` for reuse by all unit tests.
 
 ## Phase 3: User Story 1 - Convert an Amount (Priority: P1)
 
@@ -43,18 +43,18 @@ or network dependency.
 
 ### Core implementation
 
-- [ ] T011 [US1] Implement `BnmXmlParser` in `src/CurrencyConverter.Core/Parsing/BnmXmlParser.cs` using `System.Xml.Linq`; parse `ValCurs/@Date` and each `Valute` `CharCode`, `Name`, `Nominal`, and `Value` with invariant culture, normalize `Value / Nominal`, add MDL at 1, and reject empty, malformed, incomplete, duplicate, or non-positive records.
-- [ ] T012 [US1] Implement `CurrencyConverter` in `src/CurrencyConverter.Core/Services/CurrencyConverter.cs` using `decimal`; calculate `amount * sourceRate / targetRate`, preserve full precision until display rounding, return the original amount for identical currencies, and include rate date and BNM source metadata.
-- [ ] T013 [US1] Implement `InputValidator` in `src/CurrencyConverter.Core/Validation/InputValidator.cs` to require both currency codes and accept comma or dot decimal separators while rejecting empty, alphabetic, zero, negative, overflow, and non-finite amounts.
-- [ ] T014 [US1] Add parser unit tests in `src/CurrencyConverter.Tests/Parsing/BnmXmlParserTests.cs` for valid XML, MDL insertion, invariant decimal parsing, `Nominal` normalization, malformed XML, empty XML, missing fields, duplicate codes, and non-positive rates.
-- [ ] T015 [US1] Add conversion unit tests in `src/CurrencyConverter.Tests/Services/CurrencyConverterTests.cs` for direct, reverse, foreign-to-foreign-through-MDL, identical currency, and two-decimal display results.
-- [ ] T016 [US1] Add input validation unit tests in `src/CurrencyConverter.Tests/Validation/InputValidatorTests.cs` for positive values, comma separator, dot separator, empty input, letters, zero, negative values, overflow, and missing selectors.
+- [x] T011 [US1] Implement `BnmXmlParser` in `src/CurrencyConverter.Core/Parsing/BnmXmlParser.cs` using `System.Xml.Linq`; parse `ValCurs/@Date` and each `Valute` `CharCode`, `Name`, `Nominal`, and `Value` with invariant culture, normalize `Value / Nominal`, add MDL at 1, and reject empty, malformed, incomplete, duplicate, or non-positive records.
+- [x] T012 [US1] Implement `CurrencyConverter` in `src/CurrencyConverter.Core/Services/CurrencyConverter.cs` using `decimal`; calculate `amount * sourceRate / targetRate`, preserve full precision until display rounding, return the original amount for identical currencies, and include rate date and BNM source metadata.
+- [x] T013 [US1] Implement `InputValidator` in `src/CurrencyConverter.Core/Validation/InputValidator.cs` to require both currency codes and accept comma or dot decimal separators while rejecting empty, alphabetic, zero, negative, overflow, and non-finite amounts.
+- [x] T014 [US1] Add parser unit tests in `src/CurrencyConverter.Tests/Parsing/BnmXmlParserTests.cs` for valid XML, MDL insertion, invariant decimal parsing, `Nominal` normalization, malformed XML, empty XML, missing fields, duplicate codes, and non-positive rates.
+- [x] T015 [US1] Add conversion unit tests in `src/CurrencyConverter.Tests/Services/CurrencyConverterTests.cs` for direct, reverse, foreign-to-foreign-through-MDL, identical currency, and two-decimal display results.
+- [x] T016 [US1] Add input validation unit tests in `src/CurrencyConverter.Tests/Validation/InputValidatorTests.cs` for positive values, comma separator, dot separator, empty input, letters, zero, negative values, overflow, and missing selectors.
 
 ### WPF conversion interface
 
-- [ ] T017 [US1] Create `MainWindow.xaml` in `src/CurrencyConverter.App/Views/` with amount input, source and target currency selectors, Convert button, result area, rate date, source label, and status/fallback message bindings; do not put calculation or XML logic in code-behind.
-- [ ] T018 [US1] Create `MainViewModel.cs` in `src/CurrencyConverter.App/ViewModels/` with bindable amount, selected currencies, currency list, result, rate date, source, status, and busy state; disable Convert until amount and both selectors are populated.
-- [ ] T019 [US1] Create `ConvertCommand` and application composition in `src/CurrencyConverter.App/Services/` so the ViewModel calls Core interfaces asynchronously and never blocks the UI thread.
+- [x] T017 [US1] Create `MainWindow.xaml` in `src/CurrencyConverter.App/Views/` with amount input, source and target currency selectors, Convert button, result area, rate date, source label, and status/fallback message bindings; do not put calculation or XML logic in code-behind.
+- [x] T018 [US1] Create `MainViewModel.cs` in `src/CurrencyConverter.App/ViewModels/` with bindable amount, selected currencies, currency list, result, rate date, source, status, and busy state; disable Convert until amount and both selectors are populated.
+- [x] T019 [US1] Create `ConvertCommand` and application composition in `src/CurrencyConverter.App/Services/` so the ViewModel calls Core interfaces asynchronously and never blocks the UI thread.
 
 **Checkpoint**: With a deterministic provider/cache, the WPF view can display a
 successful conversion and all core conversion tests pass.
@@ -70,20 +70,20 @@ explicit fallback metadata without a thrown UI exception.
 
 ### Core implementation
 
-- [ ] T020 [US2] Implement `BnmRatesProvider` in `src/CurrencyConverter.Core/Services/BnmRatesProvider.cs` with an injected long-lived `HttpClient`, finite timeout, cancellation support, date-formatted BNM URI generation, and explicit handling for non-success responses, timeouts, empty bodies, and parse failures.
-- [ ] T021 [US2] Add bounded previous-date search to `BnmRatesProvider` in `src/CurrencyConverter.Core/Services/BnmRatesProvider.cs`; after an empty or unusable response, try each preceding calendar date for at most seven days, use the returned `ValCurs/@Date`, and set `UsedFallback` when it differs from the requested date.
-- [ ] T022 [US2] Implement `JsonRateCache` in `src/CurrencyConverter.Core/Storage/JsonRateCache.cs` using `System.Text.Json`, `%LOCALAPPDATA%` application storage, validated snapshot metadata, directory creation, temporary-file replacement, and non-fatal cache read/write outcomes.
-- [ ] T023 [US2] Integrate `IRateCache` into `BnmRatesProvider` so only complete successful snapshots are saved, valid cached data is offered after network/search failure, corrupt or empty cache data is rejected, and the UI receives an explicit cached-date message.
-- [ ] T024 [P] [US2] Add a provider test double and HTTP handler in `src/CurrencyConverter.Tests/Fixtures/` that maps requested dates to deterministic XML, empty bodies, HTTP errors, and thrown timeout/network exceptions.
-- [ ] T025 [US2] Add the required no-network unit test in `src/CurrencyConverter.Tests/Services/BnmRatesProviderNetworkTests.cs`; simulate a transport failure and verify no exception escapes, cached rates are offered when present, and the cached rate date is exposed.
-- [ ] T026 [US2] Add the required empty-weekend/holiday unit test in `src/CurrencyConverter.Tests/Services/BnmRatesProviderFallbackTests.cs`; return empty or 404 responses for requested and preceding dates, verify search stops after seven days, and verify the first usable snapshot is marked with its actual date.
-- [ ] T027 [US2] Add the required cache-after-restart unit test in `src/CurrencyConverter.Tests/Storage/JsonRateCachePersistenceTests.cs`; save through one cache instance, create a second instance pointing at the same temporary LocalApplicationData path, load the snapshot, and verify rates/date/source survive.
-- [ ] T028 [US2] Add cache corruption and write-failure tests in `src/CurrencyConverter.Tests/Storage/JsonRateCacheTests.cs` to verify invalid JSON, missing fields, and filesystem errors produce explicit non-fatal outcomes without replacing a usable network snapshot.
+- [x] T020 [US2] Implement `BnmRatesProvider` in `src/CurrencyConverter.Core/Services/BnmRatesProvider.cs` with an injected long-lived `HttpClient`, finite timeout, cancellation support, date-formatted BNM URI generation, and explicit handling for non-success responses, timeouts, empty bodies, and parse failures.
+- [x] T021 [US2] Add bounded previous-date search to `BnmRatesProvider` in `src/CurrencyConverter.Core/Services/BnmRatesProvider.cs`; after an empty or unusable response, try each preceding calendar date for at most seven days, use the returned `ValCurs/@Date`, and set `UsedFallback` when it differs from the requested date.
+- [x] T022 [US2] Implement `JsonRateCache` in `src/CurrencyConverter.Core/Storage/JsonRateCache.cs` using `System.Text.Json`, `%LOCALAPPDATA%` application storage, validated snapshot metadata, directory creation, temporary-file replacement, and non-fatal cache read/write outcomes.
+- [x] T023 [US2] Integrate `IRateCache` into `BnmRatesProvider` so only complete successful snapshots are saved, valid cached data is offered after network/search failure, corrupt or empty cache data is rejected, and the UI receives an explicit cached-date message.
+- [x] T024 [P] [US2] Add a provider test double and HTTP handler in `src/CurrencyConverter.Tests/Fixtures/` that maps requested dates to deterministic XML, empty bodies, HTTP errors, and thrown timeout/network exceptions.
+- [x] T025 [US2] Add the required no-network unit test in `src/CurrencyConverter.Tests/Services/BnmRatesProviderNetworkTests.cs`; simulate a transport failure and verify no exception escapes, cached rates are offered when present, and the cached rate date is exposed.
+- [x] T026 [US2] Add the required empty-weekend/holiday unit test in `src/CurrencyConverter.Tests/Services/BnmRatesProviderFallbackTests.cs`; return empty or 404 responses for requested and preceding dates, verify search stops after seven days, and verify the first usable snapshot is marked with its actual date.
+- [x] T027 [US2] Add the required cache-after-restart unit test in `src/CurrencyConverter.Tests/Storage/JsonRateCachePersistenceTests.cs`; save through one cache instance, create a second instance pointing at the same temporary LocalApplicationData path, load the snapshot, and verify rates/date/source survive.
+- [x] T028 [US2] Add cache corruption and write-failure tests in `src/CurrencyConverter.Tests/Storage/JsonRateCacheTests.cs` to verify invalid JSON, missing fields, and filesystem errors produce explicit non-fatal outcomes without replacing a usable network snapshot.
 
 ### WPF freshness and fallback interface
 
-- [ ] T029 [US2] Wire the production `BnmRatesProvider`, `JsonRateCache`, parser, validator, and converter in `src/CurrencyConverter.App/Services/AppComposition.cs` without leaking infrastructure into XAML.
-- [ ] T030 [US2] Update `MainViewModel.cs` and `MainWindow.xaml` so current, previous-date, cached, unavailable, timeout, and source-date statuses are always visible and distinguish fallback results from current BNM results.
+- [x] T029 [US2] Wire the production `BnmRatesProvider`, `JsonRateCache`, parser, validator, and converter in `src/CurrencyConverter.App/Services/AppComposition.cs` without leaking infrastructure into XAML.
+- [x] T030 [US2] Update `MainViewModel.cs` and `MainWindow.xaml` so current, previous-date, cached, unavailable, timeout, and source-date statuses are always visible and distinguish fallback results from current BNM results.
 
 **Checkpoint**: Network failure, empty publication-day responses, and restart
 with a persisted cache all remain non-crashing and user-transparent.
@@ -98,10 +98,10 @@ negative, comma, dot, missing-selector, and same-currency inputs; verify
 invalid requests do not reach the provider and valid same-currency requests
 return the input amount.
 
-- [ ] T031 [US3] Add the required invalid-input unit test in `src/CurrencyConverter.Tests/Validation/InputValidationEdgeCaseTests.cs`; verify empty, alphabetic, zero, and negative input returns a clear error, does not call `IRatesProvider`, and does not produce a conversion result.
-- [ ] T032 [US3] Add the required identical-currencies unit test in `src/CurrencyConverter.Tests/Services/IdenticalCurrencyConversionTests.cs`; verify source and target with the same code return the entered amount without a provider error and preserve rate metadata.
-- [ ] T033 [US3] Add ViewModel command tests in `src/CurrencyConverter.Tests/App/MainViewModelTests.cs` for Convert button enabled state, validation status, comma/dot input, no provider call for invalid input, and visible result/source/date bindings for valid input.
-- [ ] T034 [US3] Refine `MainViewModel.cs` and `MainWindow.xaml` validation presentation so invalid text, zero, negative values, and missing selectors remain in the window with a corrective message and never terminate the application.
+- [x] T031 [US3] Add the required invalid-input unit test in `src/CurrencyConverter.Tests/Validation/InputValidationEdgeCaseTests.cs`; verify empty, alphabetic, zero, and negative input returns a clear error, does not call `IRatesProvider`, and does not produce a conversion result.
+- [x] T032 [US3] Add the required identical-currencies unit test in `src/CurrencyConverter.Tests/Services/IdenticalCurrencyConversionTests.cs`; verify source and target with the same code return the entered amount without a provider error and preserve rate metadata.
+- [x] T033 [US3] Add ViewModel command tests in `src/CurrencyConverter.Tests/App/MainViewModelTests.cs` for Convert button enabled state, validation status, comma/dot input, no provider call for invalid input, and visible result/source/date bindings for valid input.
+- [x] T034 [US3] Refine `MainViewModel.cs` and `MainWindow.xaml` validation presentation so invalid text, zero, negative values, and missing selectors remain in the window with a corrective message and never terminate the application.
 
 **Checkpoint**: All five requested boundary behaviors have dedicated
 implementation coverage and separate unit-test tasks.
@@ -111,11 +111,11 @@ implementation coverage and separate unit-test tasks.
 **Purpose**: Verify the complete solution and publish runnable repository
 instructions. This phase ends with README as the final implementation task.
 
-- [ ] T035 [P] Add solution-level test helpers and deterministic culture setup in `src/CurrencyConverter.Tests/` so tests are independent of the machine locale and never call the live BNM service.
-- [ ] T036 Run `dotnet build` from the repository root, fix all compiler/analyzer errors in the affected project files, and confirm the WPF executable and test assembly are produced without manual steps.
-- [ ] T037 Run `dotnet test` from the repository root and confirm the full suite covers the five required boundary cases plus nominal, MDL, parsing, and UI-state scenarios.
-- [ ] T038 Execute every validation flow in `specs/001-bnm-currency-converter/quickstart.md`, confirm rate date/source visibility and non-crashing failure behavior, and correct any discrepancy in source or test files.
-- [ ] T039 Add `README.md` at the repository root as the final task, documenting prerequisites, `dotnet build`, `dotnet test`, the WPF run command, expected application behavior, and offline/cache validation without requiring console interaction from end users.
+- [x] T035 [P] Add solution-level test helpers and deterministic culture setup in `src/CurrencyConverter.Tests/` so tests are independent of the machine locale and never call the live BNM service.
+- [x] T036 Run `dotnet build` from the repository root, fix all compiler/analyzer errors in the affected project files, and confirm the WPF executable and test assembly are produced without manual steps.
+- [x] T037 Run `dotnet test` from the repository root and confirm the full suite covers the five required boundary cases plus nominal, MDL, parsing, and UI-state scenarios.
+- [x] T038 Execute every validation flow in `specs/001-bnm-currency-converter/quickstart.md`, confirm rate date/source visibility and non-crashing failure behavior, and correct any discrepancy in source or test files.
+- [x] T039 Add `README.md` at the repository root as the final task, documenting prerequisites, `dotnet build`, `dotnet test`, the WPF run command, expected application behavior, and offline/cache validation without requiring console interaction from end users.
 
 ## Dependencies and Execution Order
 
